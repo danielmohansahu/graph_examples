@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore VIM stuff
+*.swp
+
+# Ignore Generated Graph Output
+*.pdf
