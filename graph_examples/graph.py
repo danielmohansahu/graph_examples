@@ -2,7 +2,7 @@
 # @author: Daniel M. Sahu
 # @brief: This class implements and adjacency-list based undirected Graph object.
 
-from graphviz import Digraph
+from graphviz import Graph as GraphvizGraph
 
 class Graph:
     def __init__(self, num_nodes):
@@ -81,16 +81,15 @@ class Graph:
         A highly inefficient approach, since we basically construct an entirely
         new graph object.
         """
-        dot = Digraph(comment="My Graph")
+        dot = GraphvizGraph(comment="MyGraph")
 
         # first initialize the nodes
         for node in self.nodes.keys():
             dot.node(str(node))
 
         # then add the edges
-        for source, targets in self.nodes.items():
-            for target, weight in targets:
-                dot.edge(str(source), str(target), label=str(weight))
+        for weight, source, target in self.edge_list():
+            dot.edge(str(source), str(target), label=str(weight))
 
         return dot
 
