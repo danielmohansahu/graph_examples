@@ -59,6 +59,5 @@ def min_spanning_tree(graph):
             mst = tree
             weight = w
 
-    print("Found MST with {} nodes and a cost of {}.".format(len(mst),weight))
     return mst, weight
 
