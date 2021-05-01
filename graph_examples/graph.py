@@ -39,6 +39,16 @@ class Graph:
         edges.sort()
         return edges
 
+    def node_list(self):
+        """ Get a list of all current nodes.
+        """
+        return list(self.nodes.keys())
+
+    def neighbors(self, node):
+        """ Return a list of (neighbor, weight) for all neighbors of the given node.
+        """
+        return list(self.nodes[node])
+
     def add_edge(self, source, target, weight):
         """ Add a weighted edge from source -> target with the given weight.
         """
