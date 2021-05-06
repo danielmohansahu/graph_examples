@@ -103,9 +103,10 @@ class Graph:
 
     def __str__(self):
         # convenience magic method wrapper for a pure terminal output
-        dot = self._render()
-        print(dot.source)
+        result = "Adjacency List Graph Representation:"
+        for node,list_ in self.nodes.items():
+            result = result + "\n\t{}: {}".format(node,list_)
+        result += "\n"
 
-        # return some string, so python doesn't get upset
-        return ""
+        return result
 
