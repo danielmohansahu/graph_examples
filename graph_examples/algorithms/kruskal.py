@@ -1,3 +1,4 @@
+from collections import defaultdict
 
 def min_spanning_tree(graph):
     """ Returns the Minimum Spanning Tree of the given Graph.
@@ -7,6 +8,7 @@ def min_spanning_tree(graph):
     """
     # initialize a dict (edge: weight) to hold our sets
     sets = []
+    connections = defaultdict(list)
 
     # get the list of graph edges (u,v)
     sorted_edges = graph.edge_list()
@@ -25,6 +27,7 @@ def min_spanning_tree(graph):
                 tgt_set = idx
 
         # decide what to do based on findings
+        parent = True
         if (src_set is None) and (tgt_set is None):
             # new set
             sets.append((set([source, target]), weight))
@@ -39,7 +42,7 @@ def min_spanning_tree(graph):
         elif tgt_set == src_set:
             # both belong to the same set (tree). skip, since
             #  the existing one is already lower cost
-            pass
+            parent = False
         else:
             # join two separate trees
             s1,w1 = sets[src_set]
@@ -48,6 +51,10 @@ def min_spanning_tree(graph):
             # update the source set and remove the target set
             sets[src_set] = (s1.union(s2), w1 + w2)
             sets.pop(tgt_set)
+
+        if (parent):
+            connections[source].append(target)
+            connections[target].append(source)
 
     # return the minimum spanning tree and weight
     #  note we return the largest set, since theoretically we
@@ -59,5 +66,5 @@ def min_spanning_tree(graph):
             mst = tree
             weight = w
 
-    return mst, weight
+    return mst, weight, connections
 
