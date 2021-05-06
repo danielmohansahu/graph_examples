@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import code
+import copy
 
 from graph_examples.graph import Graph
 from graph_examples.algorithms.kruskal import min_spanning_tree
@@ -38,25 +39,39 @@ if __name__ == "__main__":
     g.save()
 
     # print out adjacency list representation
-    print(g)
+    print("\n" + str(g))
 
     ###########################################################################
     ###################### Kruskal's Minimum Spanning Tree ####################
     ###########################################################################
 
     # call algorithm
-    mst, weight = min_spanning_tree(g)
-    print("Found MST with {} nodes and a cost of {}.".format(len(mst),weight))
+    mst, weight, connections = min_spanning_tree(g)
+    print("Found MST with {} nodes and a cost of {} via Kruskal's Algorithm.\n".format(len(mst),weight))
 
-    print("@TODO, figure out what 'parent' means in this context")
+    # starting from "root" of 1, print out the children of each node
+    completed = []
+    remaining = [1]
+    while len(remaining) > 0:
+        # check connections of the remaining nodes
+        new_nodes = []
+        for node in remaining:
+            for connection in connections[node]:
+                # skip already processed ones
+                if connection not in completed:
+                    print("\t{} is the 'parent' of {}".format(node, connection))
+                    new_nodes.append(connection)
 
+        # switch to the new list
+        completed += remaining
+        remaining = new_nodes
 
     ###########################################################################
     ######################### Dijkstra's Shortest Path ########################
     ###########################################################################
 
     path, cost = shortest_path(g, 3, 19)
-    print("Found shortest path from {}->{}: {}, cost: {}".format(
+    print("\nFound shortest path via Dijkstra's from {}->{}: {}, cost: {}".format(
         3, 19, "->".join([str(p) for p in path]), cost))
 
 
